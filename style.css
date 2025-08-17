@@ -84,6 +84,15 @@ body {margin: 0;}
   background:black !important;
 }
 
+
+#iczos {
+  max-width: 20%;   /* scales with screen width */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+
 /* Fonts, text & content blocks */
 #i7vn {font-family:Comic Sans MS, sans-serif;font-size:0px;color:white;}
 #i1qk {font-family:'Comic Sans MS', sans-serif;color:white;}
