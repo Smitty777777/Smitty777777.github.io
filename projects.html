@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Projects — Ollie Smith</title>
+  <link rel="stylesheet" href="./style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <div class="fish-pattern" aria-hidden="true">
+    <svg width="100%" height="100%" focusable="false">
+      <defs>
+        <pattern id="ichthys-pattern" width="120" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(-11)">
+          <g class="linked-ichthys">
+            <path d="M0 40Q30 4 60 40Q30 76 0 40M60 40Q90 4 120 40Q90 76 60 40"/>
+            <path class="cross-links" d="M0 40L30 0M0 40L30 80M60 40L90 0M60 40L90 80M120 40L150 0M120 40L150 80"/>
+          </g>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#ichthys-pattern)"/>
+    </svg>
+  </div>
+
+  <header class="titlebar">
+    <h1>Ollie Smith</h1>
+    <a class="github-button" href="https://github.com/Smitty777777" target="_blank" rel="noreferrer" aria-label="Ollie Smith on GitHub">github</a>
+  </header>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="./index.html#about">About</a>
+    <a href="./projects.html" aria-current="page">Projects</a>
+    <a href="./index.html#research">Research</a>
+    <a href="./altruism.html">Altruism</a>
+  </nav>
+
+  <main>
+    <div class="projects" id="projects">
+      <div class="projects-header">
+        <h2 class="projects-heading">Projects</h2>
+        <button class="expand-all" type="button" aria-expanded="false" aria-controls="project-liquidator project-timecop project-ticker project-genesis-research project-smiterminal project-fixdapter project-osmitrader project-classic">Expand all</button>
+      </div>
+      <section class="year-group" aria-labelledby="year-2025">
+        <h2 class="year-heading" id="year-2025">2025</h2>
+
+        <article class="project-section">
+          <h3>Osmi Liquidator</h3>
+          <div class="project-content" id="project-liquidator">
+            <p>Liquidator serves as a node-based algo builder and quoter similar to Trading Technologies Algo Design Lab (ADL). It’s a fallback for a deprecation that may prevent me from using OsmiTrader, which relies on specific ISVs for routing. Liquidator uses the Microsoft COM interop library to communicate with software that supports it, usually for the purpose of trading through Excel RTD. For example, Liquidator works with Trading Technologies to provide theo prices and offsets to TT autoTraders and MM algos as well as Stellar RTD. It can also be used for fully automated trading when used with other platforms such as Rithmic Trader and CQG. The strategies are saved to .strategy and can then be run in the executor windows with the ability to adjust public parameters. Thanks to Komorra for providing the node control library as OSS (https://github.com/komorra).</p>
+            <p>Liquidator has sub-par latency due to the nature of its design but is great for prototyping.</p>
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/b67dd616-ea91-47c6-a53a-55dfa480d464__nodes.png" loading="lazy" alt="Osmi Liquidator node editor">
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/e0b3ecde-9e91-4eb5-8c68-7d50cf066c17__windows.png" loading="lazy" alt="Osmi Liquidator executor windows">
+          </div>
+        </article>
+
+        <article class="project-section">
+          <h3>Timecop++</h3>
+          <div class="project-content" id="project-timecop">
+            <p>Timecop++ is my backtesting engine which ingests CME MDP MBO or BBOs, maintains each implied and outright order book in the file and fills with curve fitting for beyond-best-bid/offer fills in the case that BBOs are used. Timecop provides parameters for exchange delay, notification delay and internal latency. It was originally written in C# and the recent refactor has made it far more performant. Timecop returns a fill report and allows searching historical add/del/trade to see the market state at the time of a fill.</p>
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/07638625-2fb5-444a-b4bb-9c68259fa2a4__image.png" loading="lazy" alt="Timecop backtesting interface">
+          </div>
+        </article>
+
+        <article class="project-section">
+          <h3>Genesis Ticker</h3>
+          <div class="project-content" id="project-ticker">
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/402a807c-5fce-4145-8f20-0348ef633e27__screenshot-2025-06-24-103651.png" loading="lazy" alt="Genesis Ticker interface">
+          </div>
+        </article>
+      </section>
+
+      <section class="year-group" aria-labelledby="year-2024">
+        <h2 class="year-heading" id="year-2024">2024</h2>
+
+        <article class="project-section">
+          <h3>Genesis Research</h3>
+          <div class="project-content" id="project-genesis-research">
+            <p>Genesis Research is an economic data and news platform. GR features high-speed news wires and economic event data from a number of sources as well as global commodity, equity/index and foreign exchange quotes. The UI imitates older versions of Refinitiv Eikon. I no longer maintain it.</p>
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/eebba597-94d6-4586-aaac-13c1bbdff889__screenshot-2025-04-27-095926.png" loading="lazy" alt="Genesis Research interface">
+          </div>
+        </article>
+
+        <article class="project-section">
+          <h3>SmiTerminal</h3>
+          <div class="project-content" id="project-smiterminal">
+            <p>C++ Win32 economic data CLI.</p>
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/da506d57-3fa5-40de-8d0d-bc7b8ef3ab63__image13.png" loading="lazy" alt="SmiTerminal command-line interface">
+          </div>
+        </article>
+
+        <article class="project-section">
+          <h3>FIXDapter</h3>
+          <div class="project-content" id="project-fixdapter">
+            <p>The FIXDapter API is an easy-to-use FIX API that maintains a TCP session and parses inbound and outbound FIX messages. FIXDapter is available in both a C++ and C# .NET version, the C# version utilizing event handlers. FIXDapter acts as both acceptor and initiator. The most important feature is its ability to codegen message schemas from a config using reflection, making it easy to implement ASCII FIX for multiple vendors.</p>
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/836e1b87-3ccf-43be-b789-a3e3dfd73184__screenshot-2025-05-05-161950.png" loading="lazy" alt="FIXDapter interface">
+          </div>
+        </article>
+      </section>
+
+      <section class="year-group" aria-labelledby="year-2022">
+        <h2 class="year-heading" id="year-2022">2022</h2>
+
+        <article class="project-section">
+          <h3>OsmiTrader/Genesis</h3>
+          <div class="project-content" id="project-osmitrader">
+            <p>OsmiTrader/Genesis is my complete trading stack consisting of the OsmiTrader daemon and the Genesis GUI instance. OsmiTrader is the core trading platform, featuring strategyManager, a quoting engine for market making, cross-contract spreading and hitting strategies. OsmiTrader has been coloed with the CME at CyrusOne CH1 and uses a combination of FIX binary over TCP and protobuf to receive market data and route orders to Cunningham Trading Systems with RTTs under a millisecond.</p>
+            <p>It started as a tool to pull orderbook data out of a retail futures platform to create an improved price ladder for click trading.</p>
+            <p>OsmiTrader is written in C++ and is deployed bare on CentOS Stream. Genesis is the front-end stack, built on the .NET Framework. Genesis consists of the StrategyManager UI which allows the creation of multiple algo instances simultaneously, the selection of hedging and basis markets and the user-defined or algo theo price. The user can open an order book ladder for click trading, view the audit trail, fills, working orders, etc.</p>
+            <p>The price ladders can also load autospreader markets between any two contracts on any exchange. I use the CME’s method of constructing the implied spread book (synthetic spreads in StrategyManager is a WIP).</p>
+            <p>The front end also has the ability to forward market data to a different computer, for which I have both an acceptor application written in C++ and a Qt GUI. The current WIP version of OsmiTrader gets rid of the old C++/CLR interface. Currently the feed handlers are implemented in modern .NET with a C++/CLR interface for C++ strategies. Strategies are based around a generic/parameterized quoter, providing their own fair value implementation. The new version features a separate trigger-based system which handles hedging internally, though its orders are still exposed to the quoter. The trigger system preloads order actions which can be triggered on events. It also implements new limit and batch preload actions. Preloads are orders sent to the gateway marked as held and with a maximum pay-up price; they pass pre-trade risk but are not released until they receive a trigger. The batch preload allows preload limits to manage child orders.</p>
+            <p>OsmiTrader quoter/hedger manager, Genesis ladder/autospreaders and risk screens (v3 build):</p>
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/f89700f6-da66-407d-969b-833dd1507bbc__screenshot-2026-03-14-010802.png" loading="lazy" alt="OsmiTrader Genesis v3 interface">
+            <p>V2 build:</p>
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/fa7d6a2d-61ba-41d9-a244-7f45ae9cdf60__capture.PNG" loading="lazy" alt="OsmiTrader Genesis v2 interface">
+            <p>Market data streamer received BBOs:</p>
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/866aa8b2-96d4-4028-b50e-8b04f6cd57cf__screenshot20260125172300.png" loading="lazy" alt="OsmiTrader market data streamer">
+          </div>
+        </article>
+
+        <article class="project-section">
+          <h3>Genesis Trader Classic</h3>
+          <div class="project-content" id="project-classic">
+            <p>The legacy version of Genesis. Built to target legacy Windows NT operating systems such as Windows XP, 2000, 7 and Vista. The visual layout and functionality is derived from older versions of Trading Technologies’ now-discontinued X_Trader platform (V7, V6.9).</p>
+            <p>Genesis Trader Classic features the following:</p>
+            <ul>
+              <li>Market depth ladder with customizable order hotkeys, colors, trading limits and defaults; ability to trade across multiple accounts; iceberg and OCO functions</li>
+              <li>Positions and fills window</li>
+              <li>Autospreaders</li>
+              <li>Working orders with modification, cancel/replace and held-order functionality</li>
+              <li>Audit trail recording and displaying all important events on the client/exchange</li>
+            </ul>
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/b91e87f1-5088-4c31-9e37-04bb8ef39f0f__screenshot-2025-04-30-075318.png" loading="lazy" alt="Genesis Trader Classic interface">
+            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/45857a1e-c318-4b0f-86a3-10e406d78d16__screenshot-2025-04-10-125438.png" loading="lazy" alt="Genesis Trader Classic ladder">
+          </div>
+        </article>
+      </section>
+    </div>
+
+  </main>
+
+  <script>
+    const expandAllButton = document.querySelector('.expand-all');
+    const projectContents = document.querySelectorAll('.project-content');
+
+    expandAllButton.addEventListener('click', () => {
+      const expanded = expandAllButton.getAttribute('aria-expanded') === 'true';
+      expandAllButton.setAttribute('aria-expanded', String(!expanded));
+      expandAllButton.textContent = expanded ? 'Expand all' : 'Collapse all';
+      projectContents.forEach((content) => content.classList.toggle('is-expanded', !expanded));
+    });
+  </script>
+</body>
+</html>
