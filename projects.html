@@ -51,6 +51,188 @@
           <h3>OsmiMath</h3>
           <div class="project-content" id="project-osmimath">
             <p>OsmiMath is a C++ tensor and matrix SIMD math library that utilizes AVX2 instructions for vectorized operations, including matrix transposition, inverse, dot and element products. It implements extensions for various forms of inference.</p>
+            <h4>Usages:</h4>
+            <pre class="usage-code" tabindex="0" aria-label="3D cube transformation C++ example"><code class="language-cpp">#include "matrix.hpp"
+
+#include &lt;cstddef&gt;
+#include &lt;iostream&gt;
+
+int main() {
+  const AVX2Math::matrix&lt;4, 8&gt; cube{{
+    -1,  1,  1, -1, -1,  1,  1, -1,
+    -1, -1,  1,  1, -1, -1,  1,  1,
+    -1, -1, -1, -1,  1,  1,  1,  1,
+     1,  1,  1,  1,  1,  1,  1,  1
+  }};
+
+  const AVX2Math::matrix&lt;4, 4&gt; transform{{
+    0, -2, 0, 10,
+    2,  0, 0,  0,
+    0,  0, 2,  5,
+    0,  0, 0,  1
+  }};
+
+  const auto world = AVX2Math::AVX2Dot(transform, cube);
+  for (std::size_t vertex = 0; vertex &lt; cube.cols; ++vertex) {
+    std::cout &lt;&lt; "Vertex " &lt;&lt; vertex &lt;&lt; ": "
+              &lt;&lt; world(0, vertex) &lt;&lt; ", "
+              &lt;&lt; world(1, vertex) &lt;&lt; ", "
+              &lt;&lt; world(2, vertex) &lt;&lt; '\n';
+  }
+
+  const auto inverse = AVX2Math::AVX2Inverse(transform);
+  if (!inverse) {
+    return 1;
+  }
+  const auto recovered = AVX2Math::AVX2Dot(*inverse, world);
+  std::cout &lt;&lt; "Recovered first vertex: "
+            &lt;&lt; recovered(0, 0) &lt;&lt; ", "
+            &lt;&lt; recovered(1, 0) &lt;&lt; ", "
+            &lt;&lt; recovered(2, 0) &lt;&lt; '\n';
+}</code></pre>
+            <pre class="usage-code" tabindex="0" aria-label="Linear regression C++ example"><code class="language-cpp">#include "extensions/linear_model.hpp"
+
+#include &lt;cstddef&gt;
+#include &lt;iostream&gt;
+
+int main() {
+  AVX2Math::matrix&lt;10, 2&gt; data{};
+  for (std::size_t row = 0; row &lt; 10; ++row) {
+    data(row, 0) = float(row);
+    data(row, 1) = 1.0f + 2.0f * data(row, 0);
+  }
+
+  const linear_model&lt;10, 2, 1&gt; model(data);
+  const linear_model&lt;10, 2, 1&gt; ridge(data, {
+    .penalty = regularization::ridge,
+    .alpha = 0.1
+  });
+  const linear_model&lt;10, 2, 1&gt; lasso(data, {
+    .penalty = regularization::lasso,
+    .alpha = 0.1
+  });
+
+  std::cout &lt;&lt; model.Predict({10.0f}) &lt;&lt; '\n';
+  std::cout &lt;&lt; ridge.Predict({10.0f}) &lt;&lt; '\n';
+  std::cout &lt;&lt; lasso.Predict({10.0f}) &lt;&lt; '\n';
+  std::cout &lt;&lt; model.Intercept() &lt;&lt; ' ' &lt;&lt; model.Coefficients()[1] &lt;&lt; '\n';
+
+  const AVX2Math::matrix&lt;3, 1&gt; inputs{{10.0f, 11.0f, 12.0f}};
+  for (double prediction : model.Predict(inputs)) {
+    std::cout &lt;&lt; prediction &lt;&lt; '\n';
+  }
+}</code></pre>
+            <pre class="usage-code" tabindex="0" aria-label="Logistic regression C++ example"><code class="language-cpp">#include "extensions/logistic_model.hpp"
+
+#include &lt;cstddef&gt;
+#include &lt;iostream&gt;
+
+int main() {
+  AVX2Math::matrix&lt;20, 2&gt; data{};
+  for (std::size_t row = 0; row &lt; 20; ++row) {
+    data(row, 0) = row &lt; 10 ? -1.0f : 1.0f;
+    data(row, 1) = row &lt; 10 ? float(row &lt; 2) : float(row &lt; 18);
+  }
+
+  const logistic_model&lt;20, 2, 1&gt; model(data, {
+    .penalty = regularization::ridge,
+    .alpha = 0.1
+  });
+
+  std::cout &lt;&lt; model.PredictProbability({1.0f}) &lt;&lt; '\n';
+  std::cout &lt;&lt; model.Predict({1.0f}, 0.5) &lt;&lt; '\n';
+
+  const AVX2Math::matrix&lt;2, 1&gt; inputs{{-1.0f, 1.0f}};
+  const auto probabilities = model.PredictProbability(inputs);
+  const auto labels = model.Predict(inputs);
+  for (std::size_t row = 0; row &lt; inputs.rows; ++row) {
+    std::cout &lt;&lt; probabilities[row] &lt;&lt; ' ' &lt;&lt; labels[row] &lt;&lt; '\n';
+  }
+}</code></pre>
+            <pre class="usage-code" tabindex="0" aria-label="LightGBM regression and classification C++ example"><code class="language-cpp">#include "extensions/lightgbm_model.hpp"
+
+#include &lt;cstddef&gt;
+#include &lt;iostream&gt;
+
+int main() {
+  AVX2Math::matrix&lt;20, 2&gt; data{};
+  for (std::size_t row = 0; row &lt; 20; ++row) {
+    data(row, 0) = float(row);
+    data(row, 1) = row &lt; 10 ? 0.0f : 10.0f;
+  }
+
+  const lightgbm_model&lt;20, 2, 1&gt; regressor(data, {
+    .iterations = 100,
+    .learning_rate = 0.1,
+    .num_leaves = 2,
+    .max_bins = 20
+  });
+
+  std::cout &lt;&lt; regressor.Predict({15.0f}) &lt;&lt; '\n';
+  std::cout &lt;&lt; regressor.TreeCount() &lt;&lt; '\n';
+
+  const AVX2Math::matrix&lt;2, 1&gt; inputs{{5.0f, 15.0f}};
+  for (double prediction : regressor.Predict(inputs)) {
+    std::cout &lt;&lt; prediction &lt;&lt; '\n';
+  }
+
+  auto binary_data = data;
+  for (std::size_t row = 0; row &lt; 20; ++row) {
+    binary_data(row, 1) = float(row &gt;= 10);
+  }
+
+  const lightgbm_model&lt;20, 2, 1&gt; classifier(binary_data, {
+    .objective = boosting_objective::binary_logloss,
+    .iterations = 100,
+    .learning_rate = 0.1,
+    .num_leaves = 2,
+    .max_bins = 20,
+    .seed = 42
+  });
+
+  std::cout &lt;&lt; classifier.Predict({15.0f}) &lt;&lt; '\n';
+  std::cout &lt;&lt; classifier.PredictClass({15.0f}) &lt;&lt; '\n';
+}</code></pre>
+            <pre class="usage-code" tabindex="0" aria-label="Q-learning C++ example"><code class="language-cpp">#include "extensions/q_learning_model.hpp"
+
+q_learning_model&lt;4, 2&gt; agent({
+  .learning_rate = 0.25,
+  .discount_factor = 0.9,
+  .exploration_rate = 0.2
+});
+std::mt19937 generator(42);
+
+for (std::size_t episode = 0; episode &lt; 2000; ++episode) {
+  std::size_t state = 0;
+
+  for (std::size_t step = 0; step &lt; 64 &amp;&amp; state != 3; ++step) {
+    const auto action = agent.SelectAction(state, generator);
+    const auto next = action == 1 ? state + 1 : (state == 0 ? 0 : state - 1);
+    const bool terminal = next == 3;
+
+    agent.Update(state, action, terminal ? 1.0 : 0.0, next, terminal);
+    state = next;
+  }
+}
+
+const auto action = agent.Predict(0);
+const auto value = agent.QValue(0, action);</code></pre>
+            <pre class="usage-code" tabindex="0" aria-label="Linear Q-learning C++ example"><code class="language-cpp">#include "extensions/linear_q_learning_model.hpp"
+
+linear_q_learning_model&lt;3, 4&gt; agent({
+  .learning_rate = 0.01,
+  .discount_factor = 0.99,
+  .exploration_rate = 0.1
+});
+std::mt19937 generator(42);
+std::array&lt;float, 3&gt; state{0.2f, -0.4f, 0.8f};
+
+const auto action = agent.SelectAction(state, generator);
+std::array&lt;float, 3&gt; next_state{0.3f, -0.2f, 0.7f};
+agent.Update(state, action, 1.0, next_state);
+
+const auto values = agent.QValues(state);
+const auto best_action = agent.Predict(state);</code></pre>
           </div>
         </article>
 
@@ -114,7 +296,6 @@
           <h3>FIXDapter</h3>
           <div class="project-content" id="project-fixdapter">
             <p>The FIXDapter API is an easy-to-use FIX API that maintains a TCP session and parses inbound and outbound FIX messages. FIXDapter is available in both a C++ and C# .NET version, the C# version utilizing event handlers. FIXDapter acts as both acceptor and initiator. The most important feature is its ability to codegen message schemas from a config using reflection, making it easy to implement ASCII FIX for multiple vendors.</p>
-            <img src="https://cdn.grapesjs.com/workspaces/cm9zo2rjo13js4wxdezvi9al6/assets/836e1b87-3ccf-43be-b789-a3e3dfd73184__screenshot-2025-05-05-161950.png" loading="lazy" alt="FIXDapter interface">
           </div>
         </article>
       </section>

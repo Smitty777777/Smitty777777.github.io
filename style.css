@@ -237,6 +237,24 @@ a:focus-visible, button:focus-visible { outline: 2px solid #fff; outline-offset:
 .project-content { position: relative; font-weight: 400; }
 .project-content img { display: block; max-width: 100%; height: auto; margin: 14px 0 20px; }
 
+.project-content h4 { margin: 20px 0 10px; font-size: inherit; }
+.usage-code {
+  max-width: 100%;
+  margin: 0 0 20px;
+  padding: 16px;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  background: var(--background);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.85em;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-wrap: normal;
+}
+.usage-code code { font: inherit; }
+.usage-code:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
 .js .project-content {
   max-height: 9.25rem;
   overflow: hidden;
