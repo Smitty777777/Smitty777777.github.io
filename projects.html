@@ -6,6 +6,27 @@
   <meta name="robots" content="noindex,nofollow">
   <title>Projects — Ollie Smith</title>
   <link rel="stylesheet" href="./style.css">
+  <style>
+    .benchmark-results {
+      max-width: 100%;
+      overflow-x: auto;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      background: var(--background);
+    }
+    .benchmark-results:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+    .benchmark-results table { width: 100%; border-collapse: collapse; }
+    .benchmark-results caption { padding: 10px 12px; text-align: left; font-weight: 700; }
+    .benchmark-results th,
+    .benchmark-results td {
+      padding: 6px 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: right;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .benchmark-results th:first-child { text-align: left; }
+  </style>
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -51,6 +72,172 @@
           <h3>OsmiMathx86</h3>
           <div class="project-content" id="project-osmimath">
             <p>OsmiMath is a header only C++ tensor SIMD math library that utilizes AVX2 x86 instructions for vectorized operations, including matrix transposition, inverse, dot and element products, much faster than clang/gcc with 03 optimizations. Included are extensions for various forms of statistical inference.</p>
+            <div class="benchmark-results" role="region" aria-labelledby="osmimath-benchmark-caption" tabindex="0">
+              <table aria-describedby="osmimath-benchmark-details">
+                <caption id="osmimath-benchmark-caption">median µs per operation (single core)</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Operation</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">OsmiMath GCC</th>
+                    <th scope="col">GCC auto</th>
+                    <th scope="col">OsmiMath Clang</th>
+                    <th scope="col">Clang auto</th>
+                    <th scope="col">Netlib</th>
+                    <th scope="col">OpenBLAS</th>
+                    <th scope="col">Intel oneMKL</th>
+                    <th scope="col">GSL CBLAS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Multiply</th>
+                    <td>16×16</td>
+                    <td>0.08912</td>
+                    <td>0.1698</td>
+                    <td>0.1022</td>
+                    <td>0.1407</td>
+                    <td>1.751</td>
+                    <td>0.3234</td>
+                    <td>0.3294</td>
+                    <td>1.843</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Multiply</th>
+                    <td>63×63</td>
+                    <td>6.81</td>
+                    <td>17.19</td>
+                    <td>6.7</td>
+                    <td>20.12</td>
+                    <td>128</td>
+                    <td>8.18</td>
+                    <td>10.46</td>
+                    <td>95.22</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Multiply</th>
+                    <td>256×256</td>
+                    <td>377.9</td>
+                    <td>842.8</td>
+                    <td>435.1</td>
+                    <td>768.9</td>
+                    <td>6951</td>
+                    <td>320.3</td>
+                    <td>390.7</td>
+                    <td>6844</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Transpose</th>
+                    <td>16×16</td>
+                    <td>0.01607</td>
+                    <td>0.06475</td>
+                    <td>0.0161</td>
+                    <td>0.06478</td>
+                    <td>—</td>
+                    <td>0.03145</td>
+                    <td>0.3457</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Transpose</th>
+                    <td>63×63</td>
+                    <td>0.3603</td>
+                    <td>1.92</td>
+                    <td>0.4157</td>
+                    <td>1.514</td>
+                    <td>—</td>
+                    <td>0.4274</td>
+                    <td>4.239</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Transpose</th>
+                    <td>256×256</td>
+                    <td>9.031</td>
+                    <td>21.01</td>
+                    <td>9.169</td>
+                    <td>19.97</td>
+                    <td>—</td>
+                    <td>8.197</td>
+                    <td>68.04</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Inverse</th>
+                    <td>16×16</td>
+                    <td>0.61</td>
+                    <td>2.447</td>
+                    <td>0.5449</td>
+                    <td>0.8593</td>
+                    <td>4.435</td>
+                    <td>3.44</td>
+                    <td>2.598</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Inverse</th>
+                    <td>63×63</td>
+                    <td>22.84</td>
+                    <td>41.47</td>
+                    <td>28.35</td>
+                    <td>229.5</td>
+                    <td>105.7</td>
+                    <td>43.56</td>
+                    <td>45.93</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Inverse</th>
+                    <td>256×256</td>
+                    <td>1097</td>
+                    <td>2105</td>
+                    <td>1508</td>
+                    <td>1.23e+04</td>
+                    <td>7370</td>
+                    <td>924.8</td>
+                    <td>1190</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Determinant</th>
+                    <td>16×16</td>
+                    <td>0.3383</td>
+                    <td>0.4953</td>
+                    <td>0.443</td>
+                    <td>0.7732</td>
+                    <td>2.237</td>
+                    <td>1.819</td>
+                    <td>1.042</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Determinant</th>
+                    <td>63×63</td>
+                    <td>7.773</td>
+                    <td>9.184</td>
+                    <td>8.535</td>
+                    <td>17.8</td>
+                    <td>45.1</td>
+                    <td>16.53</td>
+                    <td>26.6</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Determinant</th>
+                    <td>256×256</td>
+                    <td>258.8</td>
+                    <td>596.3</td>
+                    <td>315.3</td>
+                    <td>672.5</td>
+                    <td>2585</td>
+                    <td>275.1</td>
+                    <td>465.9</td>
+                    <td>—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p id="osmimath-benchmark-details">AMD Ryzen 5 4500U with GCC 16.1.0 and Clang 19.1.7, <code>-O3 -march=native</code></p>
             <h4>Usages:</h4>
             <pre class="usage-code" tabindex="0" aria-label="3D cube transformation C++ example"><code class="language-cpp">#include "matrix.hpp"
 
@@ -90,7 +277,7 @@ int main() {
             &lt;&lt; recovered(1, 0) &lt;&lt; ", "
             &lt;&lt; recovered(2, 0) &lt;&lt; '\n';
 }</code></pre>
-            <pre class="usage-code" tabindex="0" aria-label="Linear regression C++ example"><code class="language-cpp">#include "extensions/linear_model.hpp"
+            <pre class="usage-code" tabindex="0" aria-label="Lasso regression C++ example"><code class="language-cpp">#include "extensions/linear_model.hpp"
 
 #include &lt;cstddef&gt;
 #include &lt;iostream&gt;
@@ -102,96 +289,12 @@ int main() {
     data(row, 1) = 1.0f + 2.0f * data(row, 0);
   }
 
-  const linear_model&lt;10, 2, 1&gt; model(data);
-  const linear_model&lt;10, 2, 1&gt; ridge(data, {
-    .penalty = regularization::ridge,
-    .alpha = 0.1
-  });
   const linear_model&lt;10, 2, 1&gt; lasso(data, {
     .penalty = regularization::lasso,
     .alpha = 0.1
   });
 
-  std::cout &lt;&lt; model.Predict({10.0f}) &lt;&lt; '\n';
-  std::cout &lt;&lt; ridge.Predict({10.0f}) &lt;&lt; '\n';
   std::cout &lt;&lt; lasso.Predict({10.0f}) &lt;&lt; '\n';
-  std::cout &lt;&lt; model.Intercept() &lt;&lt; ' ' &lt;&lt; model.Coefficients()[1] &lt;&lt; '\n';
-
-  const AVX2Math::matrix&lt;3, 1&gt; inputs{{10.0f, 11.0f, 12.0f}};
-  for (double prediction : model.Predict(inputs)) {
-    std::cout &lt;&lt; prediction &lt;&lt; '\n';
-  }
-}</code></pre>
-            <pre class="usage-code" tabindex="0" aria-label="Logistic regression C++ example"><code class="language-cpp">#include "extensions/logistic_model.hpp"
-
-#include &lt;cstddef&gt;
-#include &lt;iostream&gt;
-
-int main() {
-  AVX2Math::matrix&lt;20, 2&gt; data{};
-  for (std::size_t row = 0; row &lt; 20; ++row) {
-    data(row, 0) = row &lt; 10 ? -1.0f : 1.0f;
-    data(row, 1) = row &lt; 10 ? float(row &lt; 2) : float(row &lt; 18);
-  }
-
-  const logistic_model&lt;20, 2, 1&gt; model(data, {
-    .penalty = regularization::ridge,
-    .alpha = 0.1
-  });
-
-  std::cout &lt;&lt; model.PredictProbability({1.0f}) &lt;&lt; '\n';
-  std::cout &lt;&lt; model.Predict({1.0f}, 0.5) &lt;&lt; '\n';
-
-  const AVX2Math::matrix&lt;2, 1&gt; inputs{{-1.0f, 1.0f}};
-  const auto probabilities = model.PredictProbability(inputs);
-  const auto labels = model.Predict(inputs);
-  for (std::size_t row = 0; row &lt; inputs.rows; ++row) {
-    std::cout &lt;&lt; probabilities[row] &lt;&lt; ' ' &lt;&lt; labels[row] &lt;&lt; '\n';
-  }
-}</code></pre>
-            <pre class="usage-code" tabindex="0" aria-label="LightGBM regression and classification C++ example"><code class="language-cpp">#include "extensions/lightgbm_model.hpp"
-
-#include &lt;cstddef&gt;
-#include &lt;iostream&gt;
-
-int main() {
-  AVX2Math::matrix&lt;20, 2&gt; data{};
-  for (std::size_t row = 0; row &lt; 20; ++row) {
-    data(row, 0) = float(row);
-    data(row, 1) = row &lt; 10 ? 0.0f : 10.0f;
-  }
-
-  const lightgbm_model&lt;20, 2, 1&gt; regressor(data, {
-    .iterations = 100,
-    .learning_rate = 0.1,
-    .num_leaves = 2,
-    .max_bins = 20
-  });
-
-  std::cout &lt;&lt; regressor.Predict({15.0f}) &lt;&lt; '\n';
-  std::cout &lt;&lt; regressor.TreeCount() &lt;&lt; '\n';
-
-  const AVX2Math::matrix&lt;2, 1&gt; inputs{{5.0f, 15.0f}};
-  for (double prediction : regressor.Predict(inputs)) {
-    std::cout &lt;&lt; prediction &lt;&lt; '\n';
-  }
-
-  auto binary_data = data;
-  for (std::size_t row = 0; row &lt; 20; ++row) {
-    binary_data(row, 1) = float(row &gt;= 10);
-  }
-
-  const lightgbm_model&lt;20, 2, 1&gt; classifier(binary_data, {
-    .objective = boosting_objective::binary_logloss,
-    .iterations = 100,
-    .learning_rate = 0.1,
-    .num_leaves = 2,
-    .max_bins = 20,
-    .seed = 42
-  });
-
-  std::cout &lt;&lt; classifier.Predict({15.0f}) &lt;&lt; '\n';
-  std::cout &lt;&lt; classifier.PredictClass({15.0f}) &lt;&lt; '\n';
 }</code></pre>
             <pre class="usage-code" tabindex="0" aria-label="Q-learning C++ example"><code class="language-cpp">#include "extensions/q_learning_model.hpp"
 
@@ -217,22 +320,6 @@ for (std::size_t episode = 0; episode &lt; 2000; ++episode) {
 
 const auto action = agent.Predict(0);
 const auto value = agent.QValue(0, action);</code></pre>
-            <pre class="usage-code" tabindex="0" aria-label="Linear Q-learning C++ example"><code class="language-cpp">#include "extensions/linear_q_learning_model.hpp"
-
-linear_q_learning_model&lt;3, 4&gt; agent({
-  .learning_rate = 0.01,
-  .discount_factor = 0.99,
-  .exploration_rate = 0.1
-});
-std::mt19937 generator(42);
-std::array&lt;float, 3&gt; state{0.2f, -0.4f, 0.8f};
-
-const auto action = agent.SelectAction(state, generator);
-std::array&lt;float, 3&gt; next_state{0.3f, -0.2f, 0.7f};
-agent.Update(state, action, 1.0, next_state);
-
-const auto values = agent.QValues(state);
-const auto best_action = agent.Predict(state);</code></pre>
           </div>
         </article>
 
