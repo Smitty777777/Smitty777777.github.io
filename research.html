@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Research — Ollie Smith</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="fish-pattern" aria-hidden="true">
+    <svg width="100%" height="100%" focusable="false">
+      <defs>
+        <pattern id="ichthys-pattern" width="120" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(-11)">
+          <g class="linked-ichthys">
+            <path d="M0 40Q30 4 60 40Q30 76 0 40M60 40Q90 4 120 40Q90 76 60 40"/>
+            <path class="cross-links" d="M0 40L30 0M0 40L30 80M60 40L90 0M60 40L90 80M120 40L150 0M120 40L150 80"/>
+          </g>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#ichthys-pattern)"/>
+    </svg>
+  </div>
+
+  <header class="titlebar">
+    <div class="title-identity">
+      <h1>Ollie Smith</h1>
+      <span class="title-location">Auckland, NZ</span>
+    </div>
+    <a class="github-button" href="https://github.com/Smitty777777" target="_blank" rel="noreferrer" aria-label="Ollie Smith on GitHub">github</a>
+  </header>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="./index.html#about">About</a>
+    <a href="./projects.html">Projects</a>
+    <a href="./research.html" aria-current="page">Research</a>
+    <a href="./altruism.html">Altruism</a>
+  </nav>
+
+  <main>
+    <article class="content-section essay-section">
+      <h2>A Continuous Time Markov Model as an Estimator of Future Prices</h2>
+      <p><strong>DOI:</strong> <a href="https://doi.org/10.6084/m9.figshare.35139007" target="_blank" rel="noreferrer">10.6084/m9.figshare.35139007</a></p>
+
+      <section class="research-abstract" aria-labelledby="abstract-heading">
+        <h2 id="abstract-heading">Abstract</h2>
+        <p>We introduce and expand on existing micro-structure estimators of fair value with a Continuous Time Markov Chain (CTMC) implementation. We compare with mid-price, order-book weighted mid-price, and discrete time Markov estimates on high frequency Nikkei 225 futures data at 0.1, 1, 5, and 10 second forecasting horizons.</p>
+      </section>
+    </article>
+  </main>
+</body>
+</html>

@@ -173,6 +173,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid #fff; outline-offset:
 .content-section p, .content-section ul { max-width: 85ch; margin: 0 0 9px; }
 .content-section ul { padding-left: 22px; }
 .content-section li { margin-bottom: 4px; }
+.content-section .charity-list { margin-top: 18px; }
+.charity-list li { margin-bottom: 10px; }
+.source-note { color: var(--muted); }
+.research-abstract { margin-top: 24px; }
 .essay-section { max-width: 85ch; }
 .hex-text {
   color: var(--muted);
